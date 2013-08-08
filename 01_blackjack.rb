@@ -184,14 +184,15 @@ puts
 
 #show table
 puts "Dealer shows:"
-	autoPlayer
+	dealer = Marshal.load( Marshal.dump(autoPlayer) )
+
 puts
 puts
 
 while players > 0
 	if players == 1
 		puts "#{playerName}, you have:"
-		livePlayer
+		live = livePlayer
 		puts
 		puts
 	else	
@@ -201,6 +202,14 @@ while players > 0
 		puts
 	end
 	players = players - 1
+end
+
+if dealer > live
+	puts "Dealer wins."
+elsif live > dealer
+	puts "You win, #{playerName}!"
+else
+	puts "Tie."
 end
 
 end
@@ -240,6 +249,12 @@ end
 
 
 
+
+
+
+
+
+puts "Goodbye!"
 
 
 
