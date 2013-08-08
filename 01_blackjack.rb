@@ -125,6 +125,41 @@ end
 
 end
 
+
+#hit?
+while $handVal < 16 && player != 1
+	deal 1, 1
+end
+
+while $handVal < 21 && player == 1
+	puts 'Do you want to hit [h] or stand [s]?'
+	hitChoice = gets.chomp
+end
+
+while hitChoice != 'h' && hitChoice != 's'
+	puts '[h] for hit or [s] for stand'
+	hitChoice = gets.chomp
+end
+
+if hitChoice == 's'
+	end
+
+while $handVal < 21 && player == 1 && hitChoice == 'h'
+	deal 1, 1
+end
+
+if $handVal == 21
+	puts "Blackjack!"
+elsif $handVal > 21
+	puts "Busted"
+else end
+
+end
+
+end
+
+
+
 #show table
 #hash hands
 
