@@ -92,7 +92,7 @@ end
 
 
 def cycle hand
-puts "HAND: #{hand}"
+#puts "HAND: #{hand}"
 handName = Marshal.load( Marshal.dump(hand) )
 handTotal = Marshal.load( Marshal.dump(hand) )
 
@@ -101,9 +101,9 @@ handTotal = Marshal.load( Marshal.dump(hand) )
 while handName.length > 0
 	card = handName.pop
 	name = cardName card
-	puts "CARDS: #{name}"
+	#puts "CARD: facedown"
+	#puts "CARD: #{name}"
 end
-
 #hand points
 total = handValue handTotal
 end
@@ -113,17 +113,19 @@ end
 def autoPlayer
 hand = deal 2
 dupeHand  = Marshal.load( Marshal.dump(hand) )
+puts "DEAL: #{cardName dupeHand.pop}"
+puts "DEAL: --"
 total = cycle hand
 
 
 #hits
 while total < 17
 	newCard = $deck.pop
+	puts "HIT: #{cardName newCard}"
 	hand.unshift newCard
 	total = cycle hand
-	puts "VALUE: #{total}"
 end
-
+	puts "VALUE: #{total}"
 autoPlayer = total
 end
 
@@ -131,12 +133,15 @@ end
 def livePlayer
 hand = deal 2
 dupeHand  = Marshal.load( Marshal.dump(hand) )
+puts "DEAL: #{cardName dupeHand.pop}"
+puts "DEAL: #{cardName dupeHand.pop}"
+
 total = cycle hand
-puts "VALUE: #{total}"
 
 #hits
 hitChoice = 'h'
 while total < 22 && hitChoice == 'h'
+	puts
 	puts 'Do you want to hit [h] or stand [s]?'
 	hitChoice = gets.chomp
 
@@ -150,6 +155,7 @@ while total < 22 && hitChoice == 'h'
 		hand.unshift newCard
 		total = cycle hand
 		puts "VALUE: #{total}"
+
 	else
 		puts "Stands at #{total}."
 	end
@@ -183,7 +189,7 @@ puts
 
 
 #show table
-puts "Dealer shows:"
+puts "----------Dealer shows:----------"
 	dealer = Marshal.load( Marshal.dump(autoPlayer) )
 
 puts
@@ -191,12 +197,12 @@ puts
 
 while players > 0
 	if players == 1
-		puts "#{playerName}, you have:"
+		puts "#----------{playerName}, you have:----------"
 		live = livePlayer
 		puts
 		puts
 	else	
-		puts "Player #{players} shows:"
+		puts "----------Player #{players} shows:----------"
 		autoPlayer
 		puts
 		puts
@@ -228,33 +234,4 @@ again = gets.chomp
 	end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 puts "Goodbye!"
-
-
-
