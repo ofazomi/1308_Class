@@ -7,7 +7,7 @@ $hand = []
 
 
 while cards.length > 0
-  draw = cards[rand(cards.length)]
+	draw = cards[rand(cards.length)]
 	cards.delete(draw)
 	$deck.push draw
 end
@@ -42,6 +42,7 @@ puts
 #deal cards
 
 def deal count, player
+$hand = []
 while count > 0	
 	card = $deck.pop
 	$hand.push card
@@ -122,74 +123,32 @@ elsif ace.length > 0 && ($handVal + 11) < 21
 else
 end
 
-
-#hit?
-while $handVal < 21 && player == 1
-	puts 'Do you want to hit [h] or stand [s]?'
-	hitChoice = gets.chomp
 end
-
-while hitChoice != 'h' && hitChoice != 's'
-	puts '[h] for hit or [s] for stand'
-	hitChoie = gets.chomp
-end
-
-if hitChoice == 'h'
-	deal 1, 1
-	Value $hand
-else end
-end
-
-
-
-
-
-
-
 
 #show table
+#hash hands
 
 puts "Dealer shows"
 deal 2, 9
-handDealer = $hand
+allHand[:dealer] = $hand
+Value $hand
 puts
-
 
 while $players > 0
 	if $players == 1
 		puts "#{playerName}, you have:"
 		deal 2, $players
+		allHand[:$players] = $hand
+		Value $hand
 		puts
 
 	else	
 		puts "Player #{$players} shows:"
 		deal 2, $players
+		allHand[:$players] = $hand
+		value $hand
 		puts
 	end
 	$players = $players - 1
 end
 
-
-#
-
-
-
-
-
-
-
-
-
-
-#define Hit
-
-
-
-
-
-
-
-#ask players for hits
-	#deal cards
-
-#reports hits
