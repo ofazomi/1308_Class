@@ -1,10 +1,7 @@
-#shuffle deck
+
 
 $deck = []
 cards = ['H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'HJ', 'HQ', 'HK', 'HA', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'DJ', 'DQ', 'DK', 'DA', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'SJ', 'SQ', 'SK', 'SA', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'CJ', 'CQ', 'CK', 'CA']
-$card = ''
-$hand = []
-
 
 while cards.length > 0
 	draw = cards[rand(cards.length)]
@@ -12,46 +9,22 @@ while cards.length > 0
 	$deck.push draw
 end
 
-
-
-
-#set player and house
-
-puts 'Welcome to Blackjack!'
-puts "How many players are here tonight?"
-$players = gets.chomp.to_i
-
-while $players < 1 || $players > 8
-	puts "Sorry, this table seats one to 8 players."
-	puts "How many will be playing?"
-	$players = gets.chomp.to_i
-	end
-	
-puts "Great! We have #{$players} players."
-
-
-puts "What\'s your name, player?"
-	playerName = gets.chomp.capitalize
-puts "Nice to meet you, #{playerName}."
-puts
-puts "Here's the flop..."
-sleep 1
-puts
-
-
-#deal cards
-
-def deal count, player
-$hand = []
+def deal count 
+hand = []
 while count > 0	
 	card = $deck.pop
-	$hand.push card
+	hand.push card
+	count = count -1
+end
+deal = hand
+end
 
-	check = (card.split(//))
-	value = check.pop
-	suit = check.pop
-	valName = 'none'
 
+def cardName card
+check = (card.split(//))
+value = check.pop
+suit = check.pop
+valName = 'none'
 
 	if suit == 'H'
 		suit = 'Hearts'
@@ -74,31 +47,18 @@ while count > 0
 		valName = value
 	end
 
-	if count == 2 && player == 1
-		puts "#{valName} of #{suit}"
-	else 
-	end
-
-	if count != 2
-		puts "#{valName} of #{suit}"
-	else 
-	end
-
-count = count -1
-end
+	cardName = "#{valName} of #{suit}"
 end
 
 
-
-#figure out what cards are worth
-def Value hand
+def handValue handArr
 ace = []
-$handVal = 0
+handVal = 0
 valNum = 0
 card = []
 
-while $hand.length > 0
-	card = $hand.pop
+while handArr.length > 0
+	card = handArr.pop
 	check = (card.split(//))
 	value = check.pop
 	suit = check.pop
@@ -111,79 +71,165 @@ while $hand.length > 0
 	else
 		valNum = value.to_i
 	end
-	$handVal = $handVal + valNum
+	handVal = handVal + valNum
 end
 
 
 #deal with ace
-if ace.length > 0 && ($handVal + 11) > 21
-	$handVal = $handVal + 1
-elsif ace.length > 0 && ($handVal + 11) < 21
-	$handVal = $handVal + 11
-else
+while ace.length > 0
+	if (handVal + 11) > 21
+		handVal = handVal + 1
+	elsif (handVal + 11) <= 21
+		handVal = handVal + 11
+	else
+	end
+	ace.pop
 end
 
+handValue = handVal
+
 end
 
 
-#hit?
-while $handVal < 16 && player != 1
-	deal 1, 1
+def cycle hand
+puts "HAND: #{hand}"
+handName = Marshal.load( Marshal.dump(hand) )
+handTotal = Marshal.load( Marshal.dump(hand) )
+
+
+#card names
+while handName.length > 0
+	card = handName.pop
+	name = cardName card
+	puts "CARDS: #{name}"
 end
 
-while $handVal < 21 && player == 1
+#hand points
+total = handValue handTotal
+end
+
+
+
+def autoPlayer
+hand = deal 2
+dupeHand  = Marshal.load( Marshal.dump(hand) )
+total = cycle hand
+puts "VALUE: #{total}"
+
+
+#hits
+while total < 17
+	newCard = $deck.pop
+	hand.unshift newCard
+	total = cycle hand
+	puts "VALUE: #{total}"
+end
+
+autoPlayer = total
+end
+
+
+def livePlayer
+hand = deal 2
+dupeHand  = Marshal.load( Marshal.dump(hand) )
+total = cycle hand
+puts "VALUE: #{total}"
+
+#hits
+while total < 22
 	puts 'Do you want to hit [h] or stand [s]?'
 	hitChoice = gets.chomp
-end
 
-while hitChoice != 'h' && hitChoice != 's'
-	puts '[h] for hit or [s] for stand'
-	hitChoice = gets.chomp
-end
-
-if hitChoice == 's'
+	while hitChoice != 'h' && hitChoice != 's'
+		puts '[h] for hit or [s] for stand'
+		hitChoice = gets.chomp
 	end
 
-while $handVal < 21 && player == 1 && hitChoice == 'h'
-	deal 1, 1
+	if hitChoice == 'h'
+		newCard = $deck.pop
+		hand.unshift newCard
+		total = cycle hand
+		puts "VALUE: #{total}"
+	else
+		puts "Stands at #{total}."
+	end
 end
 
-if $handVal == 21
-	puts "Blackjack!"
-elsif $handVal > 21
-	puts "Busted"
-else end
-
+livePlayer = total
 end
 
-end
+#----------program----------
 
+#set player and house
+puts 'Welcome to Blackjack!'
+puts "How many players are here tonight?"
+players = gets.chomp.to_i
+
+while players < 1 || players > 8
+	puts "Sorry, this table seats one to eight players."
+	puts "How many will be playing?"
+	players = gets.chomp.to_i
+	end
+	
+puts "Great! We have #{players} players."
+
+puts "What\'s your name, player?"
+	playerName = gets.chomp.capitalize
+puts "Nice to meet you, #{playerName}."
+puts
+puts "Here's the deal..."
+sleep 1
+puts
 
 
 #show table
-#hash hands
-
-puts "Dealer shows"
-deal 2, 9
-allHand[:dealer] = $hand
-Value $hand
+puts "Dealer shows:"
+	autoPlayer
+puts
 puts
 
-while $players > 0
-	if $players == 1
+while players > 0
+	if players == 1
 		puts "#{playerName}, you have:"
-		deal 2, $players
-		allHand[:$players] = $hand
-		Value $hand
+		livePlayer
 		puts
-
+		puts
 	else	
-		puts "Player #{$players} shows:"
-		deal 2, $players
-		allHand[:$players] = $hand
-		value $hand
+		puts "Player #{players} shows:"
+		autoPlayer
+		puts
 		puts
 	end
-	$players = $players - 1
+	players = players - 1
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
