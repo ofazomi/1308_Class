@@ -1,4 +1,4 @@
-
+def blackjack
 
 $deck = []
 cards = ['H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'HJ', 'HQ', 'HK', 'HA', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'DJ', 'DQ', 'DK', 'DA', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'SJ', 'SQ', 'SK', 'SA', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'CJ', 'CQ', 'CK', 'CA']
@@ -114,7 +114,6 @@ def autoPlayer
 hand = deal 2
 dupeHand  = Marshal.load( Marshal.dump(hand) )
 total = cycle hand
-puts "VALUE: #{total}"
 
 
 #hits
@@ -136,7 +135,8 @@ total = cycle hand
 puts "VALUE: #{total}"
 
 #hits
-while total < 22
+hitChoice = 'h'
+while total < 22 && hitChoice == 'h'
 	puts 'Do you want to hit [h] or stand [s]?'
 	hitChoice = gets.chomp
 
@@ -203,11 +203,21 @@ while players > 0
 	players = players - 1
 end
 
+end
 
+#----------
+again = 'y'
 
+while again == 'y'
+	blackjack
 
-
-
+puts 'Do you want to play again? [y] or [no]'
+again = gets.chomp
+	while again != 'y' && again != 'n'
+		puts '[y] for play again or [n] for quit'
+		again = gets.chomp
+	end
+end
 
 
 
