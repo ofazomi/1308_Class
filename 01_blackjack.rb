@@ -130,6 +130,7 @@ autoPlayer = total
 end
 
 
+
 def livePlayer
 hand = deal 2
 dupeHand  = Marshal.load( Marshal.dump(hand) )
@@ -210,12 +211,14 @@ while players > 0
 	players = players - 1
 end
 
-if dealer > live
+if dealer > live && dealer < 21
 	puts "Dealer wins."
-elsif live > dealer
+elsif live > dealer && live < 21
 	puts "You win, #{playerName}!"
+elsif live > 21 && dealer > 21
+	puts "Draw."
 else
-	puts "Tie."
+	puts "Draw."
 end
 
 end
