@@ -1,7 +1,7 @@
 class Card
 	attr_accessor :suit, :value
 
-	def intialize (suit, value)
+	def intialize(suit, value)
 		@suit = suit
 		@value = value
 	end
@@ -13,7 +13,7 @@ end
 class Deck
 	attr_accessor :cards
 
-	def initialize (cards)
+	def initialize(cards)
 		@cards = ['H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'HJ', 'HQ', 'HK', 'HA', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'DJ', 'DQ', 'DK', 'DA', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'SJ', 'SQ', 'SK', 'SA', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'CJ', 'CQ', 'CK', 'CA']
 	end
 
@@ -30,7 +30,7 @@ end
 class Player
 	attr_accessor :player, :auto
 
-	def initialize (player, auto)
+	def initialize(player, auto)
 		@player = player
 		@auto = auto
 	end
@@ -40,7 +40,7 @@ end
 class Dealer
 	attr_accessor :dealer
 
-	def initialize (dealer)
+	def initialize(dealer)
 		@dealer = dealer
 
 end
